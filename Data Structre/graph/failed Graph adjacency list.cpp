@@ -1,5 +1,5 @@
 /* 
-
+无向图邻接表
 */
 
 #include <iostream>
@@ -12,9 +12,24 @@ using namespace std;
 typedef int weightType;  // 权重数据类型
 typedef char vertexType; // 顶点数据类型
 
-struct BodyVertexNode
+struct EdgeNode
 {
+    int adjvex;
     weightType weight;
+    EdgeNode *next;
+};
+
+struct VertexNode
+{
+    vertexType data;
+    EdgeNode *firstedge;
+};
+
+struct Graph
+{
+    int vertexnum;
+    int edgenum;
+    vertexType vertexList[MaxVertexNum];
 };
 
 void BuildGraph(Graph *G)
