@@ -29,45 +29,52 @@ struct Graph
 {
     int vertexnum;
     int edgenum;
-    vertexType vertexList[MaxVertexNum];
+    VertexNode vertexList[MaxVertexNum];
 };
 
 void BuildGraph(Graph *G)
 {
-    int start, end;
+    int start, end, weight;
+    EdgeNode *newnode;
     cout << "Please enter the number of vertices and edges" << endl;
     cin >> G->vertexnum >> G->edgenum;
-    // 图的权重初始化
-    for (int i = 0; i < G->vertexnum; i++)
-    {
-        for (int j = 0; j < G->vertexnum; j++)
-        {
-            G->edgeList[i][j] = 0;
-        }
-    }
     // 图的顶点数据
     for (int i = 0; i < G->vertexnum; i++)
     {
-        cout << "Please enter the data of vertex" << i + 1 << endl;
-        cin >> G->vertexList[i];
+        cout << "Please enter the data of vertex" << i << endl;
+        cin >> G->vertexList[i].data;
+        G->vertexList[i].firstedge = NULL;
     }
     // 输入权重信息
     for (int i = 0; i < G->edgenum; i++)
     {
         cout << "Please enter the Start number, end number, weight" << endl;
-        cin >> start >> end;
-        cin >> G->edgeList[start - 1][end - 1];
+        cin >> start >> end >> weight;
+        //start-->end
+        newnode = new EdgeNode;
+        newnode->adjvex = end;
+        newnode->weight = weight;
+        newnode->next = G->vertexList[start].firstedge;
+        G->vertexList[start].firstedge = newnode;
+        // end-->start
+        newnode = new EdgeNode;
+        newnode->adjvex = start;
+        newnode->weight = weight;
+        newnode->next = G->vertexList[end].firstedge;
+        G->vertexList[end].firstedge = newnode;
     }
-    cout << endl;
 }
 
 void Print_Adjacency_Matrix(Graph G)
 {
     for (int i = 0; i < G.vertexnum; i++)
     {
-        for (int j = 0; j < G.vertexnum; j++)
+        cout << G.vertexList[i].data << '\t';
+        EdgeNode *p = G.vertexList[i].firstedge;
+        while (p)
         {
-            cout << G.edgeList[i][j] << '\t';
+            printf("adjvex:%d weight:%d\n", p->adjvex, p->weight);
+            p = p->next;
         }
         cout << endl;
     }
