@@ -1,5 +1,5 @@
 /* 
-
+无向图邻接矩阵
 */
 
 #include <iostream>
@@ -45,14 +45,22 @@ void BuildGraph(Graph *G)
         cout << "Please enter the Start number, end number, weight" << endl;
         cin >> start >> end;
         cin >> G->edgeList[start - 1][end - 1];
+        G->edgeList[end - 1][start - 1] = G->edgeList[start - 1][end - 1];
     }
     cout << endl;
 }
 
 void Print_Adjacency_Matrix(Graph G)
 {
+    cout << '\t';
     for (int i = 0; i < G.vertexnum; i++)
     {
+        cout << G.vertexList[i] << '\t';
+    }
+    cout << endl;
+    for (int i = 0; i < G.vertexnum; i++)
+    {
+        cout << G.vertexList[i] << '\t';
         for (int j = 0; j < G.vertexnum; j++)
         {
             cout << G.edgeList[i][j] << '\t';
