@@ -85,9 +85,21 @@ void BuildGraph(Graph *G)
     cout << endl;
 }
 
+// 并查集寻找根节点
+int Find_set(int *parent, int x)
+{
+    for (; parent[x] != x; x = parent[x])
+    {
+        ;
+    }
+    return x;
+}
+
 // Kruskal算法
 void Kruskal(Graph *G)
 {
+    // 初始化收录的边数
+    int ECount = 0;
     // 初始化最小堆
     priority_queue<MyEdge, vector<MyEdge>, mycomparison> minheap;
     // 边入堆
@@ -109,11 +121,31 @@ void Kruskal(Graph *G)
             p = p->next;
         }
     }
-    while (!minheap.empty())
+    // 初始化并查集
+    int parent[G->vertexnum + 1];
+    for (int i = 1; i <= G->vertexnum; i++)
     {
-        MyEdge p = minheap.top();
-        cout << p.v1 << " " << p.v2 << " " << p.weight << endl;
+        // 每个子集的根节点设为自身
+        parent[i] = i;
+    }
+    // 当收集到的边等于顶点数减一时，就可以构成生成树，要退出循环
+    while (ECount < G->vertexnum - 1)
+    {
+        MyEdge tmp = minheap.top();
         minheap.pop();
+        int root1 = Find_set(parent, tmp.v1);
+        int root2 = Find_set(parent, tmp.v2);
+        // 如果相等，说明二者属于同一集合，会构成回路
+        if (root1 == root2)
+        {
+            continue;
+        }
+        // 输出选择的边
+        cout << tmp.v1 << " " << tmp.v2 << endl;
+        // 合并子集
+        parent[root2] = root1;
+        // 收录的边数加一
+        ECount++;
     }
 }
 
