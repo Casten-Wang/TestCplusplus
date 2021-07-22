@@ -9,7 +9,8 @@
         "streambuf": "cpp",
         "bitset": "cpp",
         "forward_list": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "cstdlib": "cpp"
     },
     "python.pythonPath": "D:\\anaconda\\python.exe",
     "git.ignoreLimitWarning": true,
