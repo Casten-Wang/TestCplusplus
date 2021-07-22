@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 
-#define MaxVertexNum 7
+#define MaxVertexNum 10
 
 struct Graph
 {
