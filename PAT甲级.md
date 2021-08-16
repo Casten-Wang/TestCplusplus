@@ -10,8 +10,6 @@
 
 [TOC]
 
-
-
 ## 1001. A+B Format (20分)
 
 > Calculate *a*+*b* and output the sum in standard format -- that is, the digits must be separated into groups of three by commas (unless there are less than four digits).
@@ -699,3 +697,172 @@ int main()
 > 结尾无空行
 > ```
 
+```c
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int N;
+    cin >> N;
+    int A[N];
+    int sum = 0;
+    for (int i = 0; i < N; i++)
+    {
+        cin >> A[i];
+        if (i == 0)
+        {
+            sum += A[i] * 6;
+            continue;
+        }
+        int tmp = A[i] - A[i - 1];
+        if (tmp > 0)
+        {
+            sum += tmp * 6;
+        }
+        else
+        {
+            sum += tmp * (-4);
+        }
+    }
+    sum += 5 * N;
+    cout << sum;
+    return 0;
+}
+```
+
+## 1009. Product of Polynomials (25分)
+
+> This time, you are supposed to find *A*×*B* where *A* and *B* are two polynomials.
+>
+> ### Input Specification:
+>
+> Each input file contains one test case. Each case occupies 2 lines, and each line contains the information of a polynomial:
+>
+> *K* *N*1 *a**N*1 *N*2 *a**N*2 ... *N**K* *a**N**K*
+>
+> where *K* is the number of nonzero terms in the polynomial, *N**i* and *a**N**i* (*i*=1,2,⋯,*K*) are the exponents and coefficients, respectively. It is given that 1≤*K*≤10, 0≤*N**K*<⋯<*N*2<*N*1≤1000.
+>
+> ### Output Specification:
+>
+> For each test case you should output the product of *A* and *B* in one line, with the same format as the input. Notice that there must be **NO** extra space at the end of each line. Please be accurate up to 1 decimal place.
+>
+> ### Sample Input:
+>
+> ```in
+> 2 1 2.4 0 3.2
+> 2 2 1.5 1 0.5
+> 
+> 结尾无空行
+> ```
+>
+> ### Sample Output:
+>
+> ```out
+> 3 3 3.6 2 6.0 1 1.6
+> 
+> 结尾无空行
+> ```
+
+```c
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int N1, N2;
+    cin >> N1;
+    double arr[1005] = {0.0}, ans[2005] = {0.0};
+    int z;
+    double x;
+    for (int i = 0; i < N1; i++)
+    {
+        cin >> z >> x;
+        arr[z] = x;
+    }
+    cin >> N2;
+    for (int i = 0; i < N2; i++)
+    {
+        cin >> z >> x;
+        for (int j = 0; j < 1005; j++)
+        {
+            if (arr[j])
+            {
+                ans[z + j] += arr[j] * x;
+            }
+        }
+    }
+    int count = 0;
+    for (int i = 2004; i >= 0; i--)
+    {
+        if (ans[i])
+        {
+            count++;
+        }
+    }
+    cout << count;
+    for (int i = 2004; i >= 0; i--)
+    {
+        if (ans[i])
+        {
+            printf(" %d %.1f", i, ans[i]);
+        }
+    }
+    system("pause");
+    return 0;
+}
+```
+
+多项式相乘，与1002的思路一致。
+
+## 1010. Radix (25分)
+
+> Given a pair of positive integers, for example, 6 and 110, can this equation 6 = 110 be true? The answer is `yes`, if 6 is a decimal number and 110 is a binary number.
+>
+> Now for any pair of positive integers *N*1 and *N*2, your task is to find the radix of one number while that of the other is given.
+>
+> ### Input Specification:
+>
+> Each input file contains one test case. Each case occupies a line which contains 4 positive integers:
+>
+> ```
+> N1 N2 tag radix
+> ```
+>
+> Here `N1` and `N2` each has no more than 10 digits. A digit is less than its radix and is chosen from the set { 0-9, `a`-`z` } where 0-9 represent the decimal numbers 0-9, and `a`-`z` represent the decimal numbers 10-35. The last number `radix` is the radix of `N1` if `tag` is 1, or of `N2` if `tag` is 2.
+>
+> ### Output Specification:
+>
+> For each test case, print in one line the radix of the other number so that the equation `N1` = `N2` is true. If the equation is impossible, print `Impossible`. If the solution is not unique, output the smallest possible radix.
+>
+> ### Sample Input 1:
+>
+> ```in
+> 6 110 1 10
+> 
+> 结尾无空行
+> ```
+>
+> ### Sample Output 1:
+>
+> ```out
+> 2
+> 
+> 结尾无空行
+> ```
+>
+> ### Sample Input 2:
+>
+> ```in
+> 1 ab 1 2
+> 
+> 结尾无空行
+> ```
+>
+> ### Sample Output 2:
+>
+> ```out
+> Impossible
+> 
+> 结尾无空行
+> ```

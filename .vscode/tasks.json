@@ -20,6 +20,9 @@
 			"group": {
 				"kind": "test",
 				"isDefault": true
+			},
+			"presentation": {
+				"panel": "new" 
 			}
 		}
 	]
