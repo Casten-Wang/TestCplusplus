@@ -12,7 +12,7 @@ public:
     {
         // 后续m和n作为下标使用，所以要自减
         int pos = m-- + n-- - 1;
-        while (n >= 0 && n >= 0)
+        while (m >= 0 && n >= 0)
         {
             nums1[pos--] = nums1[m] > nums2[n] ? nums1[m--] : nums2[n--];
         }
